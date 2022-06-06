@@ -1,5 +1,5 @@
 import React from 'react';
-import ElementCollected from '../components/ElementCollected';
+import StatisticLine from '../components/StatisticLine';
 import Title from '../components/Title';
 
 const Statistics = ({ goodValue, neutralValue, badValue, allValue }) => {
@@ -20,15 +20,12 @@ const Statistics = ({ goodValue, neutralValue, badValue, allValue }) => {
       <Title title="Statistics" />
       {allValue > 0 ? (
         <>
-          <ElementCollected text="Good" value={goodValue} />
-          <ElementCollected text="Neutral" value={neutralValue} />
-          <ElementCollected text="Bad" value={badValue} />
-          <ElementCollected text="All" value={allValue} />
-          <ElementCollected text="Average" value={calculateAverage()} />
-          <ElementCollected
-            text="Positive"
-            value={calculatePositiveAverage()}
-          />
+          <StatisticLine text="Good" value={goodValue} />
+          <StatisticLine text="Neutral" value={neutralValue} />
+          <StatisticLine text="Bad" value={badValue} />
+          <StatisticLine text="All" value={allValue} />
+          <StatisticLine text="Average" value={calculateAverage()} />
+          <StatisticLine text="Positive" value={calculatePositiveAverage()} />
         </>
       ) : (
         <p>No given feedback</p>
