@@ -19,14 +19,16 @@ const Statistics = ({ goodValue, neutralValue, badValue, allValue }) => {
     <>
       <Title title="Statistics" />
       {allValue > 0 ? (
-        <>
-          <StatisticLine text="Good" value={goodValue} />
-          <StatisticLine text="Neutral" value={neutralValue} />
-          <StatisticLine text="Bad" value={badValue} />
-          <StatisticLine text="All" value={allValue} />
-          <StatisticLine text="Average" value={calculateAverage()} />
-          <StatisticLine text="Positive" value={calculatePositiveAverage()} />
-        </>
+        <table>
+          <tbody>
+            <StatisticLine text="Good" value={goodValue} />
+            <StatisticLine text="Neutral" value={neutralValue} />
+            <StatisticLine text="Bad" value={badValue} />
+            <StatisticLine text="All" value={allValue} />
+            <StatisticLine text="Average" value={calculateAverage()} />
+            <StatisticLine text="Positive" value={calculatePositiveAverage()} />
+          </tbody>
+        </table>
       ) : (
         <p>No given feedback</p>
       )}
