@@ -8,15 +8,21 @@ const App = () => {
   const [bad, setBad] = useState(0);
 
   const addGoodHandler = () => {
-    setGood((prevState) => prevState + 1);
+    setGood((prevState) => {
+      return prevState + 1;
+    });
   };
 
   const addNeutralHandler = () => {
-    setNeutral((prevState) => prevState + 1);
+    setNeutral((prevState) => {
+      return prevState + 1;
+    });
   };
 
   const addBadHandler = () => {
-    setBad((prevState) => prevState + 1);
+    setBad((prevState) => {
+      return prevState + 1;
+    });
   };
 
   return (
@@ -26,7 +32,12 @@ const App = () => {
         addNeutralHandler={addNeutralHandler}
         addBadHandler={addBadHandler}
       />
-      <Statistics goodCount={good} neutralCount={neutral} badCount={bad} />
+      <Statistics
+        goodValue={good}
+        neutralValue={neutral}
+        badValue={bad}
+        allValue={good + neutral + bad}
+      />
     </>
   );
 };

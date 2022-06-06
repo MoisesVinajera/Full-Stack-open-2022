@@ -1,10 +1,10 @@
 import React from 'react';
 
-const ElementCollected = ({ text, count }) => {
+const ElementCollected = ({ text, value }) => {
   return (
     <>
       <p>
-        {text} {count}
+        {text} {value}
       </p>
     </>
   );
