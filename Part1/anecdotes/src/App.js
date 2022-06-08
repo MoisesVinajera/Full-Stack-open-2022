@@ -4,6 +4,12 @@ const randomIntFromInterval = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1) + min);
 };
 
+const initialStateVotes = (array) => {
+  return array.map(() => {
+    return 0;
+  });
+};
+
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often',
@@ -16,15 +22,26 @@ const App = () => {
   ];
 
   const [selected, setSelected] = useState(0);
+  const [votes, setVotes] = useState(initialStateVotes(anecdotes));
 
-  const clickHandler = () => {
+  const nextAnecdoteHandler = () => {
     setSelected(randomIntFromInterval(0, anecdotes.length - 1));
+  };
+
+  const addVoteToAnecdoteHandler = () => {
+    setVotes((prevState) => {
+      const copy = [...prevState];
+      copy[selected] += 1;
+      return copy;
+    });
   };
 
   return (
     <>
       <div>{anecdotes[selected]}</div>
-      <button onClick={clickHandler}>next anecdote</button>
+      <p>has {votes[selected]} votes</p>
+      <button onClick={addVoteToAnecdoteHandler}>vote</button>
+      <button onClick={nextAnecdoteHandler}>next anecdote</button>
     </>
   );
 };
