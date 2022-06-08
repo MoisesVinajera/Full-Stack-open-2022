@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const randomIntFromInterval = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1) + min);
@@ -22,7 +22,12 @@ const App = () => {
   ];
 
   const [selected, setSelected] = useState(0);
+  const [anecdoteMostVoted, setAnecdoteMostVoted] = useState(0);
   const [votes, setVotes] = useState(initialStateVotes(anecdotes));
+
+  useEffect(() => {
+    setAnecdoteMostVoted(votes.indexOf(Math.max(...votes)));
+  }, [votes]);
 
   const nextAnecdoteHandler = () => {
     setSelected(randomIntFromInterval(0, anecdotes.length - 1));
@@ -38,10 +43,14 @@ const App = () => {
 
   return (
     <>
+      <h1>Anecdote of the day</h1>
       <div>{anecdotes[selected]}</div>
       <p>has {votes[selected]} votes</p>
       <button onClick={addVoteToAnecdoteHandler}>vote</button>
       <button onClick={nextAnecdoteHandler}>next anecdote</button>
+      <h1>Anecdote with most votes</h1>
+      <div>{anecdotes[anecdoteMostVoted]}</div>
+      <p>has {votes[anecdoteMostVoted]} votes</p>
     </>
   );
 };
