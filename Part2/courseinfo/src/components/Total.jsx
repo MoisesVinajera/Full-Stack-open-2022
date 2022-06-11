@@ -2,10 +2,13 @@ import React from 'react';
 
 const Total = ({ parts }) => {
   return (
-    <p>
-      Number of exercises{' '}
-      {parts[0].exercises + parts[1].exercises + parts[2].exercises}
-    </p>
+    <h3>
+      Total of{' '}
+      {parts.reduce((accumulator, part) => {
+        return accumulator + part.exercises;
+      }, 0)}{' '}
+      exercises
+    </h3>
   );
 };
 
