@@ -1,4 +1,8 @@
 import { useState } from 'react';
+import Filter from './components/Filter';
+import PersonForm from './components/PersonForm';
+import Persons from './components/Persons';
+import SearchList from './components/SearchList';
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -37,7 +41,7 @@ const App = () => {
       alert(`${newName} is already added to Numberbook`);
     } else {
       setPersons((prevState) => {
-        return [...prevState, { name: newName, Number: newNumber }];
+        return [...prevState, { name: newName, number: newNumber }];
       });
       setNewName('');
       setNewNumber('');
@@ -47,38 +51,18 @@ const App = () => {
   return (
     <>
       <h2>Numberbook</h2>
-      <p>
-        filter shown with <input onChange={searchNameOnChangeHandler} />
-      </p>
+      <Filter onChange={searchNameOnChangeHandler} />
       <h3>Add a new</h3>
-      <form>
-        <div>
-          name: <input value={newName} onChange={newNameOnChangeHandler} />
-        </div>
-        <div>
-          number:{' '}
-          <input value={newNumber} onChange={newNumberOnChangeHandler} />
-        </div>
-        <div>
-          <button type="submit" onClick={addNewNameHandler}>
-            add
-          </button>
-        </div>
-      </form>
-      {searchList.length !== 0 ? <h2>Search List</h2> : ''}
-      {searchList
-        ? searchList.map((person) => (
-            <p key={person.name}>
-              {person.name} {person.number}
-            </p>
-          ))
-        : ''}
+      <PersonForm
+        newName={newName}
+        newNameOnChangeHandler={newNameOnChangeHandler}
+        newNumber={newNumber}
+        newNumberOnChangeHandler={newNumberOnChangeHandler}
+        addNewNameHandler={addNewNameHandler}
+      />
+      <SearchList searchList={searchList} />
       <h2>Numbers</h2>
-      {persons.map((person) => (
-        <p key={person.name}>
-          {person.name} {person.number}
-        </p>
-      ))}
+      <Persons persons={persons} />
     </>
   );
 };
