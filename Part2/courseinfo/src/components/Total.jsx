@@ -6,7 +6,7 @@ const Total = ({ parts }) => {
       return accumulator + part.exercises;
     }, 0);
 
-  return <h3>Total of {countExercises()} exercises</h3>;
+  return <h4>Total of {countExercises()} exercises</h4>;
 };
 
 export default Total;
