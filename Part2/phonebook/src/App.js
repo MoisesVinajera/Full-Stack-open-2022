@@ -10,10 +10,14 @@ const App = () => {
 
   const addNewNameHandler = (event) => {
     event.preventDefault();
-    setPersons((prevState) => {
-      return [...prevState, { name: newName }];
-    });
-    setNewName('');
+    if (persons.find((person) => person.name === newName)) {
+      alert(`${newName} is already added to phonebook`);
+    } else {
+      setPersons((prevState) => {
+        return [...prevState, { name: newName }];
+      });
+      setNewName('');
+    }
   };
 
   return (
