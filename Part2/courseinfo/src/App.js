@@ -1,4 +1,5 @@
 import Course from './components/Course';
+import { v4 as uuidv4 } from 'uuid';
 
 const App = () => {
   const courses = [
@@ -50,7 +51,7 @@ const App = () => {
     <>
       <h1>Web development curriculum</h1>
       {courses.map((course) => (
-        <Course course={course} />
+        <Course key={uuidv4()} course={course} />
       ))}
     </>
   );
