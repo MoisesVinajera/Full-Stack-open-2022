@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import Country from './components/Country';
 function App() {
   const [countries, setCountries] = useState([]);
   const [searchList, setSearchList] = useState([]);
+  const [showCountry, setShowCountry] = useState({});
+  const [show, setShow] = useState(false);
 
   const searchCountriesHandler = (event) => {
     setSearchList(() => {
@@ -28,6 +31,10 @@ function App() {
     fetchCountries();
   }, []);
 
+  const showCountryHandler = (country) => {
+    setShow((prev) => !prev);
+    setShowCountry(country);
+  };
   return (
     <>
       <p>
@@ -37,22 +44,21 @@ function App() {
         <p>Too many matches, specify another filter</p>
       ) : searchList.length === 1 ? (
         searchList.map((country) => (
-          <div key={country.name.common}>
-            <h1>{country.name.common}</h1>
-            <p>capital {country.capital}</p>
-            <p>area {country.area}</p>
-            <h3>lenguages:</h3>
-            <ul>
-              {Object.values(country.languages).map((lenguage) => (
-                <li key={lenguage}>{lenguage}</li>
-              ))}
-            </ul>
-            <img src={country.flags.png} alt={country.flags.png} />
-          </div>
+          <Country key={country.name.common} country={country} />
         ))
       ) : (
         searchList.map((country) => (
-          <p key={country.name.common}>{country.name.common}</p>
+          <div key={country.name.common}>
+            {country.name.common}{' '}
+            <button onClick={() => showCountryHandler(country)}>
+              {show && country === showCountry ? 'hide' : 'show'}
+            </button>
+            {show &&
+              Object.keys(showCountry).length !== 0 &&
+              country === showCountry && (
+                <Country key={country.name.common} country={country} />
+              )}
+          </div>
         ))
       )}
     </>
