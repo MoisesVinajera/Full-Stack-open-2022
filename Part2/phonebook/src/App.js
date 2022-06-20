@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
+import personService from './service/persons';
 import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
 import Persons from './components/Persons';
 import SearchList from './components/SearchList';
-import axios from 'axios';
+
 const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState('');
@@ -13,7 +14,7 @@ const App = () => {
   useEffect(() => {
     const fetchPersons = async () => {
       try {
-        const { data } = await axios.get('http://localhost:3001/persons');
+        const data = await personService.getAll();
         setPersons(data);
       } catch (err) {
         console.log(err);
@@ -42,16 +43,22 @@ const App = () => {
     });
   };
 
-  const addNewNameHandler = (event) => {
+  const addNewNameHandler = async (event) => {
     event.preventDefault();
     if (persons.find((person) => person.name === newName)) {
       alert(`${newName} is already added to Numberbook`);
     } else {
-      setPersons((prevState) => {
-        return [...prevState, { name: newName, number: newNumber }];
-      });
-      setNewName('');
-      setNewNumber('');
+      try {
+        const newPerson = { name: newName, number: newNumber };
+        const person = await personService.create(newPerson);
+        setPersons((prevState) => {
+          return [...prevState, person];
+        });
+        setNewName('');
+        setNewNumber('');
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
