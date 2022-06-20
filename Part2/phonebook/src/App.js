@@ -5,11 +5,18 @@ import PersonForm from './components/PersonForm';
 import Persons from './components/Persons';
 import SearchList from './components/SearchList';
 
+import './index.css';
+import Notification from './components/Notification';
+
+const MESSAGE_SUCCESS_STYLE = 'message-success';
+const MESSAGE_ERROR_STYLE = 'message-error';
+
 const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
   const [searchList, setSearchList] = useState([]);
+  const [notification, setNotification] = useState({});
 
   useEffect(() => {
     const fetchPersons = async () => {
@@ -54,12 +61,17 @@ const App = () => {
           person.id !== id ? person : newPerson
         );
       });
+      notificationHandler(
+        `${newName} number was changed succesfully`,
+        MESSAGE_SUCCESS_STYLE
+      );
       setNewName('');
       setNewNumber('');
     } catch (err) {
       console.log(err);
     }
   };
+
   const addPersonHandler = async (id) => {
     try {
       const person = await personService.create({
@@ -69,6 +81,7 @@ const App = () => {
       setPersons((prevState) => {
         return [...prevState, person];
       });
+      notificationHandler(`Added ${newName}`, MESSAGE_SUCCESS_STYLE);
       setNewName('');
       setNewNumber('');
     } catch (err) {
@@ -106,9 +119,22 @@ const App = () => {
     }
   };
 
+  const notificationHandler = (message, style) => {
+    setNotification({ message, style });
+    setTimeout(() => {
+      setNotification({});
+    }, 5000);
+  };
+
   return (
     <>
       <h2>Numberbook</h2>
+      {Object.keys(notification).length > 0 && (
+        <Notification
+          message={notification.message}
+          style={notification.style}
+        />
+      )}
       <Filter onChange={searchNameOnChangeHandler} />
       <h3>Add a new</h3>
       <PersonForm
