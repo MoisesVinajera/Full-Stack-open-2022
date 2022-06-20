@@ -4,14 +4,10 @@ const Persons = ({ persons, deletePersonHandler }) => {
   return (
     <>
       {persons.map((person) => (
-        <>
-          <p key={person.name}>
-            {person.name} {person.number}{' '}
-            <button onClick={() => deletePersonHandler(person.id)}>
-              Delete
-            </button>
-          </p>
-        </>
+        <p key={person.name}>
+          {person.name} {person.number}{' '}
+          <button onClick={() => deletePersonHandler(person.id)}>Delete</button>
+        </p>
       ))}
     </>
   );

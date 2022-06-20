@@ -43,22 +43,53 @@ const App = () => {
     });
   };
 
+  const updatePersonHandler = async (id) => {
+    try {
+      const newPerson = await personService.update(id, {
+        name: newName,
+        number: newNumber,
+      });
+      setPersons((prevState) => {
+        return prevState.map((person) =>
+          person.id !== id ? person : newPerson
+        );
+      });
+      setNewName('');
+      setNewNumber('');
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const addPersonHandler = async (id) => {
+    try {
+      const person = await personService.create({
+        name: newName,
+        number: newNumber,
+      });
+      setPersons((prevState) => {
+        return [...prevState, person];
+      });
+      setNewName('');
+      setNewNumber('');
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const addNewNameHandler = async (event) => {
     event.preventDefault();
-    if (persons.find((person) => person.name === newName)) {
-      alert(`${newName} is already added to Numberbook`);
-    } else {
-      try {
-        const newPerson = { name: newName, number: newNumber };
-        const person = await personService.create(newPerson);
-        setPersons((prevState) => {
-          return [...prevState, person];
-        });
-        setNewName('');
-        setNewNumber('');
-      } catch (err) {
-        console.log(err);
+    const personFounded = persons.find((person) => person.name === newName);
+
+    if (personFounded) {
+      if (
+        window.confirm(
+          `${newName} is already added to Numberbook, replace the old number with a new one`
+        )
+      ) {
+        await updatePersonHandler(personFounded.id);
       }
+    } else {
+      addPersonHandler();
     }
   };
 
