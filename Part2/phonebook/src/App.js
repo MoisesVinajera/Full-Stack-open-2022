@@ -62,6 +62,19 @@ const App = () => {
     }
   };
 
+  const deletePersonHandler = async (id) => {
+    if (window.confirm('Do you really want to delete this person?')) {
+      try {
+        await personService.deletePerson(id);
+        setPersons((prevState) => {
+          return prevState.filter((person) => person.id !== id);
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
+
   return (
     <>
       <h2>Numberbook</h2>
@@ -76,7 +89,7 @@ const App = () => {
       />
       <SearchList searchList={searchList} />
       <h2>Numbers</h2>
-      <Persons persons={persons} />
+      <Persons persons={persons} deletePersonHandler={deletePersonHandler} />
     </>
   );
 };

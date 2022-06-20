@@ -28,4 +28,12 @@ const update = async (id, newObject) => {
   }
 };
 
-export default { getAll, create, update };
+const deletePerson = async (id) => {
+  try {
+    await axios.delete(`${baseUrl}/${id}`);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export default { getAll, create, update, deletePerson };
