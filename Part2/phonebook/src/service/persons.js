@@ -2,38 +2,22 @@ import axios from 'axios';
 const baseUrl = 'http://localhost:3001/persons';
 
 const getAll = async () => {
-  try {
-    const { data } = await axios.get(baseUrl);
-    return data;
-  } catch (err) {
-    console.log(err);
-  }
+  const { data } = await axios.get(baseUrl);
+  return data;
 };
 
 const create = async (newObject) => {
-  try {
-    const { data } = await axios.post(baseUrl, newObject);
-    return data;
-  } catch (err) {
-    console.log(err);
-  }
+  const { data } = await axios.post(baseUrl, newObject);
+  return data;
 };
 
 const update = async (id, newObject) => {
-  try {
-    const { data } = await axios.put(`${baseUrl}/${id}`, newObject);
-    return data;
-  } catch (err) {
-    console.log(err);
-  }
+  const { data } = await axios.put(`${baseUrl}/${id}`, newObject);
+  return data;
 };
 
 const deletePerson = async (id) => {
-  try {
-    await axios.delete(`${baseUrl}/${id}`);
-  } catch (err) {
-    console.log(err);
-  }
+  await axios.delete(`${baseUrl}/${id}`);
 };
 
 export default { getAll, create, update, deletePerson };

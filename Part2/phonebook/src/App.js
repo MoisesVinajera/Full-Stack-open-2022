@@ -68,7 +68,15 @@ const App = () => {
       setNewName('');
       setNewNumber('');
     } catch (err) {
-      console.log(err);
+      notificationHandler(
+        `Information of ${newName} has already been removed`,
+        MESSAGE_ERROR_STYLE
+      );
+      setPersons((prevState) => {
+        return prevState.filter((person) => person.id !== id);
+      });
+      setNewName('');
+      setNewNumber('');
     }
   };
 
@@ -85,7 +93,7 @@ const App = () => {
       setNewName('');
       setNewNumber('');
     } catch (err) {
-      console.log(err);
+      notificationHandler(err.message, MESSAGE_ERROR_STYLE);
     }
   };
 
@@ -113,6 +121,10 @@ const App = () => {
         setPersons((prevState) => {
           return prevState.filter((person) => person.id !== id);
         });
+        notificationHandler(
+          `Person was removed succesfully`,
+          MESSAGE_SUCCESS_STYLE
+        );
       } catch (err) {
         console.log(err);
       }
